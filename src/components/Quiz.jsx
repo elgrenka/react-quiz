@@ -1,10 +1,20 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { QuizContext } from "../contexts/quiz";
 import Question from "./Question";
 
 const Quiz = () => {
-
   const [quizState, dispatch] = useContext(QuizContext);
+  const apiUrl = "https://opentdb.com/api.php?amount=10&category=15&type=multiple&encode=url3986";
+
+  useEffect(() => {
+    if (quizState.questions.length > 0) {
+      return;
+    }
+    fetch(apiUrl).then(res => res.json()).then(data => {
+      console.log('data', data);
+      dispatch({ type: 'LOADED_QUESTIONS', payload: data.resutls });
+    });
+  });
 
   return (
     <div className="quiz">
@@ -12,8 +22,11 @@ const Quiz = () => {
         <div className="results">
           <div className="congratulations">Congratulations!</div>
           <div className="results-info">
-            <div>You have complete the quiz</div>
-            <div>You have got 4 of 8</div>
+            <div>You have complete the quiz.</div>
+            <div>
+              You have got {quizState.correctAnswersCount} of {''}
+              {quizState.questions.length} correct answers.
+            </div>
             <div className="next-button"
               onClick={() => dispatch({ type: 'RESTART' })}>
               Restart
@@ -21,7 +34,7 @@ const Quiz = () => {
           </div>
         </div>
       )}
-      {!quizState.showResults && (
+      {!quizState.showResults && quizState.questions.length > 0 && (
         <div>
           <div className="score">
             Question {quizState.currentQuestionIndex + 1}/
