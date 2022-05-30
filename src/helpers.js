@@ -4,11 +4,14 @@ export const shuffleAnswers = (question) => {
     ...question.incorrectAnswers,
   ];
 
-  return unshuffledAnswers.map((unshuffledAnswer) => ({
-    sort: Math.random(),
-    value: unshuffledAnswer,
-  })).sort((a, b) => a.sort - b.sort).map((a) => a.value);
-}
+  return unshuffledAnswers
+    .map((unshuffledAnswer) => ({
+      sort: Math.random(),
+      value: unshuffledAnswer,
+    }))
+    .sort((a, b) => a.sort - b.sort)
+    .map((a) => a.value);
+};
 
 export const normalizeQuestions = (backendQuestions) => {
   return backendQuestions.map((backendQuestion) => {
@@ -16,8 +19,7 @@ export const normalizeQuestions = (backendQuestions) => {
       (incorrectAnswer) => decodeURIComponent(incorrectAnswer)
     );
     return {
-      correctAnswer:
-        decodeURIComponent(backendQuestion.correct_answer),
+      correctAnswer: decodeURIComponent(backendQuestion.correct_answer),
       question: decodeURIComponent(backendQuestion.question),
       incorrectAnswers,
     };
