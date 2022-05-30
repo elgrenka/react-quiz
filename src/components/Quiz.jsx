@@ -5,7 +5,7 @@ import { QuizContext } from "../contexts/quiz";
 const Quiz = () => {
   const [quizState, dispatch] = useContext(QuizContext);
   const apiUrl =
-    "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple&encode=url3986";
+    "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple&encode=url3986";
 
   useEffect(() => {
     if (quizState.questions.length > 0) {
@@ -25,19 +25,18 @@ const Quiz = () => {
     <div className="quiz">
       {quizState.showResults && (
         <div className="results">
-          <div className="congratulations">Congratulations</div>
+          <div className="congratulations">Congratulations!</div>
           <div className="results-info">
             <div>You have completed the quiz.</div>
             <div>
-              You've got {quizState.correctAnswersCount} of{" "}
-              {quizState.questions.length}
+              You've got {quizState.correctAnswersCount} of {" "}
+              {quizState.questions.length} correct answers.
             </div>
           </div>
           <div
             className="next-button"
-            onClick={() => dispatch({ type: "RESTART" })}
-          >
-            Restart
+            onClick={() => dispatch({ type: "RESTART" })}>
+              Restart
           </div>
         </div>
       )}
@@ -50,9 +49,8 @@ const Quiz = () => {
           <Question />
           <div
             className="next-button"
-            onClick={() => dispatch({ type: "NEXT_QUESTION" })}
-          >
-            Next question
+            onClick={() => dispatch({ type: "NEXT_QUESTION" })}>
+              Next question
           </div>
         </div>
       )}
