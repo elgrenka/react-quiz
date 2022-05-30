@@ -5,18 +5,16 @@ import { QuizContext } from "../contexts/quiz";
 const Quiz = () => {
   const [quizState, dispatch] = useContext(QuizContext);
   const apiUrl =
-    "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple&encode=url3986";
+    "https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple&encode=url3986";
 
   useEffect(() => {
     if (quizState.questions.length > 0) {
       return;
     }
-    console.log("on initialize");
 
     fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => {
-        console.log("data", data);
         dispatch({ type: "LOADED_QUESTIONS", payload: data.results });
       });
   });
