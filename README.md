@@ -1,2 +1,1 @@
-# React App Quizz.
-(in development)
+# React App Quizz
